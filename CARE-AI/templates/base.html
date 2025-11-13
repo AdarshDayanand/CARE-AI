@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" >
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CARE-AI</title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../static/css/vendor.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+</head>
+
+
+<body id="top">
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+        </div>
+    </div>
+
+
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="s-pagewrap">
+
+
+        <!-- # site header 
+        ================================================== -->
+        <header class="s-header">
+
+            <div class="row s-header__inner">
+        
+                <div class="s-header__block">
+                    <div class="s-header__logo">
+                        <a class="logo" href="index.html" style="display:flex;justify-content:center;align-items:center;">
+                            <img src="../static/asset.png" alt="Assistive Communication App" style="width:50px;height:50px;">
+                            <span style="color:white;font-size:20px;font-weight:900;">CARE AI</span>
+                        </a>
+                    </div>
+        
+                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                </div> <!-- end s-header__block -->
+        
+                <nav class="s-header__nav">
+                    <ul>
+                        <li class="current"><a href="#intro" class="smoothscroll">Home</a></li>
+                        <li><a href="#about" class="smoothscroll">About Us</a></li>
+                       
+                        <li><a href="#testimonials" class="smoothscroll">Testimonials</a></li>
+                      
+                    </ul>
+                </nav>
+        
+                <div class="s-header__cta">
+                    <a href="/login" class="btn btn--stroke">Login as Caretaker</a>
+                    <a href="/register" class="btn btn--fill">Sign Up</a>
+                </div>
+        
+            </div> <!-- end s-header__inner -->
+        
+        </header> <!-- end s-header -->
+{% block body %}{% endblock body %}
+  <!-- # site-footer
+        ================================================== -->
+        <footer id="colophon" class="s-footer footer">
+            {#
+            <div class="row s-footer__top">
+              <div class="column lg-12 text-center">
+                    <h2 class="text-display-1">
+                        Subscribe to Our Newsletter.
+                    </h2>
+                    <p class="lead">
+                        Stay updated with the latest features, tips, and special offers.
+                    </p>
+                </div>
+                <div class="column lg-12 s-footer__subscribe">
+                    <div class="subscribe-form">
+                        <form id="mc-form" class="mc-form">
+                            <input type="email" name="EMAIL" id="mce-EMAIL" class="u-fullwidth text-center" placeholder="Your Email Address" required>
+                            <input type="submit" name="subscribe" value="Subscribe" class="btn btn--primary u-fullwidth">
+                            <div class="mc-status"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>#}
+        
+            <div class="row s-footer__top">
+                <div class="column lg-5 md-6 stack-on-900">
+                    <div class="footer__logo">
+                        <a href="index.html">
+                            <img src="../static/asset.png" alt="Assistive Communication App" style="width:50px;height:50px;">
+                            <span style="color:white;font-size:20px;font-weight:900;">CARE AI</span>
+                        </a>
+                    </div>
+        
+                    <p>
+                        Our mission is to empower individuals with disabilities to communicate effortlessly and effectively. Join us in making a difference.
+                    </p>
+        
+                </div>
+        
+                <div class="column lg-6 stack-on-900 end">
+                   
+        
+                    <p class="s-footer__contact">
+                        Have a question or need assistance? Send us a message: <br>
+                        <a href="mailto:support@careai.com" class="s-footer__mail-link">support@careai.com</a>
+                    </p>
+        
+                    <div class="ss-copyright">
+                        <span>© 2024 </span>
+                        <span>Created by <a href="https://www.styleshout.com/">Team AJ</a></span>
+                    </div>
+                </div>
+        
+            </div>
+        
+            <div class="ss-go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z"></path></svg>
+                </a>
+            </div> <!-- end ss-go-top -->
+        
+        </footer> <!-- end footer -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/main.js"></script>
+
+</body>
+</html>

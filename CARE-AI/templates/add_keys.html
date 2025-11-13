@@ -1,0 +1,95 @@
+{% extends "base-home.html" %}
+{% block body %}
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+
+            {% if response %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert" style="transition-duration: 5s;">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               {{response}}
+              </div>
+            {% endif %}
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Customize Preset Keys</h5>
+            <div class="card mb-0">
+              <div class="card-body p-4">
+
+
+                <h5 class="card-title fw-semibold mb-4">Add Keys</h5>
+                <div class="card">
+                  <div class="card-body">
+                    <form method="post" action="/add_keys">
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Preset key</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter preset key" name="name">
+                      
+                      </div>
+                  
+                  
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+
+                
+                <div class="col-xl-12" style="margin-top: 20px">
+   
+                  <div class="col-xl-6 stretch-card grid-margin">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex justify-content-between flex-wrap">
+                          <div></div>
+                        </div>
+                        <h4
+                          class="font-weight-semibold mb-1 text-black"
+                          style="margin-bottom: 10px"
+                        >
+                          Preset Keys
+                        </h4>
+                        <table class="table ">
+                          <thead class="table-info">
+                            <tr>
+                              <th scope="col">Key Name</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          {% set index = 1 %} {% for key in keys %}
+                     
+                          <tr>
+                            <td>{{ key[1] }}</td>
+                            <td>
+                              <form method="post" action="/delete_key">
+                                <input
+                                  type="hidden"
+                                  name="k_id"
+                                  value="{{key[0]}}"
+                                />
+    
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-danger"
+                                  href="/delete"
+                                >
+                                  Delete
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+            
+             
+           
+   
+            
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endblock body %}
+      

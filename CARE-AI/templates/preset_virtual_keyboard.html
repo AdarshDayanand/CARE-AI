@@ -1,0 +1,339 @@
+{% extends "base-home.html" %}
+
+{% block body %}
+<!--  Header End -->
+
+<!-- Eye tracking library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-eyetracker@0.1.1/jquery.eyetracker.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+
+<style>
+  /* General Styles */
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .container-fluid {
+    padding: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .keyboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .key {
+    background-color:#f2d15a;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 15px;
+    transition: background-color 0.2s ease;
+    text-align: center; /* Center align text in keys */
+  }
+
+  .key:hover {
+    background-color: #0056b3;
+  }
+
+  .spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+  }
+
+  .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+  }
+
+  @-webkit-keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+
+  @keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+
+  @-webkit-keyframes colors {
+    0% {
+      stroke: #4285F4;
+    }
+    25% {
+      stroke: #DE3E35;
+    }
+    50% {
+      stroke: #F7C223;
+    }
+    75% {
+      stroke: #1B9A59;
+    }
+    100% {
+      stroke: #4285F4;
+    }
+  }
+
+  @keyframes colors {
+    0% {
+      stroke: #4285F4;
+    }
+    25% {
+      stroke: #DE3E35;
+    }
+    50% {
+      stroke: #F7C223;
+    }
+    75% {
+      stroke: #1B9A59;
+    }
+    100% {
+      stroke: #4285F4;
+    }
+  }
+
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+  }
+
+  .key.active {
+    background-color: red;
+  }
+
+  /* Form and Message Styles */
+  #countdown-form {
+    margin-top: 20px;
+  }
+
+  .form-control {
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .btn-primary {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  /* Camera feed */
+  #blink-direction img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+  }
+
+  .message-container {
+    margin-top: 20px;
+  }
+
+  .blink-direction {
+    margin-top: 20px;
+  }
+</style>
+
+{% if response %}
+  <script>
+  let timerInterval;
+Swal.fire({
+  title: "{{response}}",
+  html: "I will close in <b></b> milliseconds.",
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading();
+    const timer = Swal.getPopup().querySelector("b");
+    timerInterval = setInterval(() => {
+      timer.textContent = `${Swal.getTimerLeft()}`;
+    }, 100);
+  },
+  willClose: () => {
+    clearInterval(timerInterval);
+  }
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log("I was closed by the timer");
+  }
+});
+</script>
+{% endif %}
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <!-- Preset Keyboard -->
+        <div class="col-md-6">
+          <h5 class="card-title fw-semibold mb-4">Preset Keyboard</h5>
+          <div class="keyboard">
+            <button class="key">Uncomfortable</button>
+            <button class="key">Tea</button>
+        
+            <button class="key">Washroom</button>
+            <button class="key"  style="color:#1B9A59" >Submit</button>
+
+            <button class="key">Walk</button>
+            <button class="key">Water</button>
+            <button class="key">Bath</button>
+            <button class="key"  style="color:#1B9A59" >Submit</button>
+            <button class="key">Hungry</button>
+           
+            <button class="key">I am Feeling Cold</button>
+            <button class="key">Medicine</button>
+            <button class="key"  style="color:#1B9A59" >Submit</button>
+            {% if keys %}
+            {% for key in keys  %}
+            <button class="key">{{key}}</button>
+            {% endfor %}{% endif %}
+            <button class="key" style="color:blue" >Clear</button>
+            <button class="key"  style="color:#1B9A59" >Submit</button>
+          </div>
+
+          <div class="message-container">
+            <h4 class="font-weight-semibold mb-1 text-black">
+              Send Message to Caretaker
+            
+            </h4>
+
+            <form action="/send-message" method="post" enctype="multipart/form-data" id="countdown-form">
+              <div class="form-group d-flex col-xl-12">
+                <textarea class="form-control mr-2" rows="4" placeholder="Enter your message here..." name="message" id="active-key-value"></textarea>
+            
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Camera Feed -->
+        <div class="col-md-6">
+          <h5 class="card-title fw-semibold mb-4">Camera Feed</h5>
+          <div class="card blink-direction" id="blink-direction">
+ </div>
+            <img src="{{ url_for('video_feed') }}" alt="Camera Feed" style="width:400px;height:400px;" />
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      
+            
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const keys = document.querySelectorAll('.key');
+    let currentKeyIndex = 0;
+
+    function highlightKey() {
+      keys.forEach((key, index) => {
+        key.classList.remove('active');
+      });
+      keys[currentKeyIndex].classList.add('active');
+    }
+
+    function moveNext() {
+      currentKeyIndex = (currentKeyIndex + 1) % keys.length;
+      highlightKey();
+    }
+
+    function highlightKeysSequentially() {
+      moveNext();
+      setTimeout(highlightKeysSequentially, 1400);
+    }
+
+    highlightKeysSequentially();
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    function getBlinkDirection() {
+      $.ajax({
+        url: "/get_blink_direction",
+        type: "GET",
+        success: function (response) {
+          $("#blink-direction").text("Blink Direction: " + response.direction);
+          if (response.direction === "Left") {
+            window.location.href = "/virtual_keyboard";
+          } else if (response.direction === "Right") {
+            window.location.href = "/preset_virtual_keyboard";
+          } else if (response.direction === "Both") {
+            var activeKeyValue = $(".key.active").text();
+            if (activeKeyValue.toLowerCase() === 'clear') {
+              $("#active-key-value").val(''); // Clear the input box
+            } else if (activeKeyValue.toLowerCase() === 'submit') {
+              $('#countdown-form').submit(); // Submit the form
+            } else {
+              $("#active-key-value").val(activeKeyValue); // Set the active key value
+            }
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error:", error);
+        },
+      });
+    }
+
+    getBlinkDirection();
+    setInterval(getBlinkDirection, 100);
+  });
+</script>
+
+
+{% endblock body %}

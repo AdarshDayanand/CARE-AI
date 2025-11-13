@@ -1,0 +1,343 @@
+{% extends "base-home.html" %}
+
+{% block body %}
+<!--  Header End -->
+
+<!-- Eye tracking library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-eyetracker@0.1.1/jquery.eyetracker.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  // Check if the WebGazer object is available
+  if (typeof webgazer !== 'undefined') {
+    console.log('WebGazer.js is loaded.');
+    // You can start using WebGazer.js here
+  } else {
+    console.log('WebGazer.js failed to load.');
+  }
+</script>
+
+<style>
+  .keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+  .key {
+    background-color: #71b43c; /* Default color for keys */
+    border: none;
+    border-radius: 5px;
+    color: #fff; /* Text color */
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    padding: 10px 15px; /* Adjusted padding for a more rectangular shape */
+    transition: background-color 0.2s ease;
+    width: 40px; /* Set a fixed width for each key */
+    height: 40px; /* Set a fixed height for each key */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Added shadow for better visual */
+  }
+  .key.active {
+    background-color: #2346d9; /* Highlighted color for active key */
+  }
+  .key:hover {
+    background-color: #dcdcdc; /* Optional hover effect */
+  }
+  #gazeDot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red; /* Change cursor color */
+    border-radius: 50%;
+    z-index: 999;
+  }
+  .spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+  }
+
+  .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+  } 
+  @-webkit-keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+
+  @keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+
+  @-webkit-keyframes colors {
+    0% {
+      stroke: #4285F4;
+    }
+    25% {
+      stroke: #DE3E35;
+    }
+    50% {
+      stroke: #F7C223;
+    }
+    75% {
+      stroke: #1B9A59;
+    }
+    100% {
+      stroke: #4285F4;
+    }
+  }
+
+  @keyframes colors {
+    0% {
+      stroke: #4285F4;
+    }
+    25% {
+      stroke: #DE3E35;
+    }
+    50% {
+      stroke: #F7C223;
+    }
+    75% {
+      stroke: #1B9A59;
+    }
+    100% {
+      stroke: #4285F4;
+    }
+  }
+
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+  }
+
+</style>
+
+{% if response %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert" style="transition-duration: 5s;">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ {{response}}
+</div>
+
+
+  <script>alert('{{response}}')</script>
+{% endif %}
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+
+        {% if response %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert" style="transition-duration: 5s;">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         {{response}}
+        </div>
+        {% endif %}
+        
+
+
+  
+        
+        <!-- Preset Keyboard -->
+        <div class="col-md-8">
+          <h5 class="card-title fw-semibold mb-4">Virtual Keyboard</h5>
+          <div class="keyboard">
+            <div class="row">
+              <button class="key" data-label="Q">Q</button>
+              <button class="key" data-label="W">W</button>
+              <button class="key" data-label="E">E</button>
+              <button class="key" data-label="R">R</button>
+              <button class="key" data-label="T">T</button>
+              <button class="key" data-label="Y">Y</button>
+              <button class="key" data-label="U">U</button>
+              <button class="key" data-label="I">I</button>
+              <button class="key" data-label="O">O</button>
+              <button class="key" data-label="P">P</button>
+              <button class="key" data-label="Backspace" id="backspace" style="width:120px;color:black">Backspace</button>
+            </div>
+            <div class="row">
+              <button class="key" data-label="A">A</button>
+              <button class="key" data-label="S">S</button>
+              <button class="key" data-label="D">D</button>
+              <button class="key" data-label="F">F</button>
+              <button class="key" data-label="G">G</button>
+              <button class="key" data-label="H">H</button>
+              <button class="key" data-label="J">J</button>
+              <button class="key" data-label="K">K</button>
+              <button class="key" data-label="L">L</button>
+              <button class="key" data-label="Backspace" id="backspace" style="width:120px;color:black">Backspace</button>
+            </div>
+            <div class="row">
+              <button class="key" data-label="Z">Z</button>
+              <button class="key" data-label="X">X</button>
+              <button class="key" data-label="C">C</button>
+              <button class="key" data-label="V">V</button>
+              <button class="key" data-label="B">B</button>
+              <button class="key" data-label="N">N</button>
+              <button class="key" data-label="M">M</button>
+              <button class="key" data-label="Backspace" id="backspace" style="width:120px;color:black">Backspace</button>
+            </div>
+    
+            <div class="row">
+          
+              <button class="key" data-label="Clear" id="clear" style="width:100px;">Clear</button>
+              <button class="key" style="width:100px;">Submit</button>
+            </div>
+          </div>
+          <div class="message-container">
+            <h4 class="font-weight-semibold mb-1 text-black">
+              Send Message to Caretaker
+              
+            </h4>
+
+            <form action="/send-message" method="post" enctype="multipart/form-data" id="countdown-form">
+              <div class="form-group d-flex col-xl-12">
+                <textarea class="form-control mr-2" rows="4" placeholder="Enter your message here..." name="message" id="active-key-value"></textarea>
+              
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Camera Feed -->
+        <div class="col-md-4">
+          <h5 class="card-title fw-semibold mb-4">Camera Feed</h5>
+          <div class="card blink-direction" id="blink-direction">
+          </div>
+            <img src="{{ url_for('video_feed') }}" alt="Camera Feed" style="width:300px;height:300px;" />
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const keys = document.querySelectorAll('.key');
+      let currentKeyIndex = 0;
+
+      function highlightKey() {
+          // Remove highlight from previous key
+          keys.forEach((key, index) => {
+              key.classList.remove('active');
+          });
+          // Highlight current key
+          keys[currentKeyIndex].classList.add('active');
+      }
+
+      function moveNext() {
+          // Move to the next key
+          currentKeyIndex = (currentKeyIndex + 1) % keys.length;
+          highlightKey();
+      }
+
+      // Function to highlight keys sequentially
+      function highlightKeysSequentially() {
+          moveNext();
+          // Repeat every second
+          setTimeout(highlightKeysSequentially, 1400);
+      }
+
+      // Start highlighting keys
+      highlightKeysSequentially();
+  });
+</script>
+
+
+<script>
+  $(document).ready(function () {
+    // Function to make AJAX request to get blink direction
+    function getBlinkDirection() {
+        $.ajax({
+            url: "/get_blink_direction",
+            type: "GET",
+            success: function (response) {
+                // Update the content of the blink direction div with the received direction
+                $("#blink-direction").text(
+                    "Blink Direction: " + response.direction
+                );
+                if (response.direction === "Left") {
+                    window.location.href = "/virtual_keyboard";
+                } else if (response.direction === "Right") {
+                    window.location.href = "/preset_virtual_keyboard";
+                } else if (response.direction === "Both") {
+                    var activeKeyValue = $(".key.active").text();
+                    if (activeKeyValue === "Clear") {
+                        // Clear all the value of textarea
+                        $("#active-key-value").val("");
+                    } else if (activeKeyValue === "Backspace") {
+                        // Remove last appended letter from textarea
+                        var currentTextAreaValue = $("#active-key-value").val();
+                        $("#active-key-value").val(currentTextAreaValue.slice(0, -1));
+                    } else if (activeKeyValue.toLowerCase() === 'submit') {
+                      $('#countdown-form').submit(); // Submit the form
+                    } else {
+                        // Get the value of the previous value of the text area
+                        var previousTextAreaValue = $("#active-key-value").val();
+                        // Update the value of the text box with the concatenated value of active key and previous value
+                        $("#active-key-value").val(previousTextAreaValue + activeKeyValue);
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+            },
+        });
+    }
+
+    // Call getBlinkDirection function initially when the page loads
+    getBlinkDirection();
+
+    // Set interval to call getBlinkDirection function every 1 second (adjust as needed)
+    setInterval(getBlinkDirection, 300);
+});
+
+</script>
+
+{% endblock %}
